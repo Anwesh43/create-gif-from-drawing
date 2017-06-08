@@ -14,6 +14,7 @@ const saveQueue = seq_queue.createQueue(1000)
 const createQueue = seq_queue.createQueue(1000)
 const createGIF = require('./GifCreator')
 io.of('/gifapp').on('connect',(socket)=>{
+    console.log("connect")
     socket.on('save',(base64Data)=>{
         saveQueue.push((cb)=>{
             imageSaver.saveFile(`img/${count}.png`,base64Data).then((data)=>{

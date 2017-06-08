@@ -25,6 +25,14 @@ const canvas = document.getElementById('drawingSpace')
 const context = canvas.getContext('2d')
 const shapes = []
 var isDown = false
+const socket = io.connect('http://localhost:9001/gifapp')
+function sendImageData() {
+    const dataURL = canvas.toDataURL()
+    const imageDataParts = dataURL.split(",")
+    if(imageDataParts.length == 2) {
+        socket.emit('save',imageDataParts[1])
+    }
+}
 function draw() {
     context.clearRect(0,0,canvas.width,canvas.height)
     shapes.forEach((shape)=>{
@@ -40,6 +48,7 @@ canvas.onmousedown = (event) => {
         window.currShape = new Shape({x,y})
         isDown = true
         draw()
+        sendImageData()
     }
 }
 canvas.onmousemove = (event) => {
@@ -47,6 +56,7 @@ canvas.onmousemove = (event) => {
     if(isDown == true) {
         currShape.addPoint({x,y})
         draw()
+        sendImageData()
     }
 }
 canvas.onmouseup = (event) => {
