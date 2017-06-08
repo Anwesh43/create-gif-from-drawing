@@ -17,7 +17,7 @@ io.of('/gifapp').on('connect',(socket)=>{
     console.log("connect")
     socket.on('save',(base64Data)=>{
         saveQueue.push((cb)=>{
-            imageSaver.saveFile(`img/${count}.png`,base64Data).then((data)=>{
+            imageSaver.saveFile(`imgs/${count}.png`,base64Data).then((data)=>{
                 console.log(`${count}.png is saved successfully`)
                 count++
                 cb.done()
@@ -27,9 +27,11 @@ io.of('/gifapp').on('connect',(socket)=>{
             })
         })
     })
-    socket.on('/creategif',(fileName)=>{
-        saveQueue.push((cb)=>{
-            createGif(fileName)
+    socket.on('creategif',(fileName)=>{
+        createQueue.push((cb)=>{
+            console.log(`trying to create ${fileName}`)
+            createGIF(fileName)
+            console.log("gif is created")
             cb.done()
         })
     })

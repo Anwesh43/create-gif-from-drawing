@@ -35,6 +35,8 @@ function sendImageData() {
 }
 function draw() {
     context.clearRect(0,0,canvas.width,canvas.height)
+    context.fillStyle = 'white'
+    context.fillRect(0,0,canvas.width,canvas.height)
     shapes.forEach((shape)=>{
         shape.draw(context)
     })
@@ -65,6 +67,12 @@ canvas.onmouseup = (event) => {
         shapes.push(currShape)
         window.currShape = undefined
         draw()
+    }
+}
+window.onkeydown = (event) => {
+    if(event.keyCode == 13) {
+        console.log("trying to create gif")
+        socket.emit('creategif','drawing.gif')
     }
 }
 draw()
