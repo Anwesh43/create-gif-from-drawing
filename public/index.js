@@ -52,6 +52,7 @@ canvas.onmousemove = (event) => {
 canvas.onmouseup = (event) => {
     if(isDown == true) {
         isDown = false
+        shapes.push(currShape)
         window.currShape = undefined
         draw()
     }
